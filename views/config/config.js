@@ -1,10 +1,10 @@
 const config = {
     database: {
-        DATABASE: 'eleme',
+        DATABASE: 'xly_elm',
         USERNAME: 'root',
-        PASSWORD: 'woaini',
+        PASSWORD: 'Xie98269826',
         PORT: '3306',
-        HOST:'106.54.193.152'
+        HOST:'122.51.186.39'
     }
 };
 module.exports = config;
