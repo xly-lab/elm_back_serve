@@ -146,9 +146,16 @@ const elmBacSql = {
                                     '${info._id}' group by username;`;
         return  allServices.query(_sql_find);
     },
+    //通过用户名获取用户信息
     getUserInfo:function(info){
         let _sql = `select username,user_type,register_time,province,city,district,street,streetNumber,_id from elm_back_userinfo where username = 
                                     '${info.username}';`;
+        return allServices.query(_sql);
+    },
+    //通过_id获取用户信息
+    getUserInfoById:function(_id){
+        let _sql = `select username,user_type,register_time,province,city,district,street,streetNumber,_id from elm_back_userinfo where _id = 
+                                    '${_id}';`;
         return allServices.query(_sql);
     },
     //验证用户通过用户密码
@@ -190,7 +197,7 @@ const elmBacSql = {
                                     '${info.shop_date2}',
                                     '${info.shop_user_id}',
                                     '${register_time}');`;
-         allServices.query(_sql_save);
+        return  allServices.query(_sql_save);
     },
     //保存商铺活动
     saveShopActives:function(info,shop_id) {

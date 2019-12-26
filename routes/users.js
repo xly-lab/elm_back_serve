@@ -2,6 +2,8 @@
 
 const router = require('koa-router')();
 
+const multer = require('koa-multer');//加载koa-multer模块
+
 const elmBacSql = require('../allSqlStatement/elmBackSql');
 
 router.prefix('/elm_back');
@@ -96,6 +98,15 @@ router.get('/cookies',async ctx=>{
   }
 });
 
+//通过cookie _id 获取用户信息
+router.get('/get_userinfo',async ctx=>{
+  console.log(ctx.query);
+  const userInfo = await elmBacSql.getUserInfoById(ctx.query._id);
+  ctx.body={
+    code:0,
+    data:userInfo[0]
+  }
+});
 //查询用户列表
 router.get('/get_userList',async ctx=>{
   console.log(ctx.query);
@@ -190,12 +201,10 @@ router.post('/save_shop',async ctx => {
   //通过shop_id保存与该店铺相关的活动
   await elmBacSql.saveShopActives(ctx.request.body,shopData[0].shop_id);
   //通过shop_id查找当前shop 的信息
-  let shopInfo = await elmBacSql.findShopByShopId(shopData[0].shop_id);
   //通过shop_id查找当前shop的活动的信息
-  let activesData =await elmBacSql.findShopActivesByShopId(shopData[0].shop_id);
   ctx.body={
     code:0,
-    data:{...shopInfo,activesData:activesData}
+    msg:'保存成功'
   }
 });
 //删除商铺
@@ -250,12 +259,27 @@ router.get('/get_place_num',async ctx=>{
 
 });
 
+
+//配置
+const storage = multer.diskStorage({
+  //文件保存路径
+  destination: function (req, file, cb) {
+    cb(null, 'public/uploads/')
+  },
+  //修改文件名称
+  filename: function (req, file, cb) {
+    var fileFormat = (file.originalname).split(".");
+    cb(null,Date.now() + "." + fileFormat[fileFormat.length - 1]);
+  }
+});
+
+//加载配置
+const upload = multer({ storage: storage });
 //获取图片
-router.post('/photos',ctx=>{
-  console.log(ctx);
+router.post('/photos',upload.single('file'),ctx=>{
   ctx.body={
     code:0,
-    data:ctx.request.body
+    filename: ctx.req.file.filename//返回文件名
   }
 });
 
