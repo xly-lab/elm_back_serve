@@ -310,7 +310,11 @@ const elmBacSql = {
     getPlaceNum:function () {
         let _get_place_num = `SELECT province,count(*) as num FROM elm_back_userinfo GROUP BY province HAVING num >=1 ;`;
         return allServices.query(_get_place_num)
-    }
+    },
+    getUserShops:function(_id){
+        let _get_user_shop = `SELECT * FROM elm_back_shop_list WHERE shop_user_id = ${_id}`;
+        return allServices.query(_get_user_shop);
+}
 
 };
 

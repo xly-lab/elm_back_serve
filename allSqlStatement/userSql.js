@@ -47,41 +47,41 @@ let  userSql = {
                 }
                 //准备一条插入语句
                 let _sql = `INSERT into address_info (username,phone,city,province,area,detailAddress,userId,defaultAddress,postalId) 
-                                    VALUES('${info.username}',
-                                    '${info.phone}',
-                                    '${info.city}',
-                                    '${info.province}',
-                                    '${info.area}',
-                                    '${info.detailAddress}',
-                                    '${info.userId}',
-                                     ${info.defaultAddress},
-                                    '${info.postalId}');`;
+                                VALUES('${info.username}',
+                                '${info.phone}',
+                                '${info.city}',
+                                '${info.province}',
+                                '${info.area}',
+                                '${info.detailAddress}',
+                                '${info.userId}',
+                                ${info.defaultAddress},
+                                '${info.postalId}');`;
                 //保存
                 allServices.query(_sql);
                 //将保存的地址信息查询出来并返回给前端
                 let _get_save_sql = `SELECT * FROM address_info WHERE (username,phone,city,province,area,detailAddress,userId,defaultAddress,postalId) = 
-                                    ('${info.username}',
-                                    '${info.phone}',
-                                    '${info.city}',
-                                    '${info.province}',
-                                    '${info.area}',
-                                    '${info.detailAddress}',
-                                     ${info.userId},
-                                     ${info.defaultAddress},
-                                    '${info.postalId}')`;
+                                ('${info.username}',
+                                '${info.phone}',
+                                '${info.city}',
+                                '${info.province}',
+                                '${info.area}',
+                                '${info.detailAddress}',
+                                ${info.userId},
+                                ${info.defaultAddress},
+                                '${info.postalId}')`;
                 return allServices.query(_get_save_sql);
         },
         //查询是否存在相同地址
         findAddress:function(info){
                 let _sql_find = `SELECT count(*) as info_sum FROM address_info WHERE (username,phone,city,province,area,detailAddress,userId,postalId) = 
-                                    ('${info.username}',
-                                     '${info.phone}',
-                                     '${info.city}',
-                                     '${info.province}',
-                                     '${info.area}',
-                                     '${info.detailAddress}',
-                                      ${info.userId},
-                                     '${info.postalId}') group by username;`;
+                                ('${info.username}',
+                                '${info.phone}',
+                                '${info.city}',
+                                '${info.province}',
+                                '${info.area}',
+                                '${info.detailAddress}',
+                                ${info.userId},
+                                '${info.postalId}') group by username;`;
                 return  allServices.query(_sql_find);
         },
         //获取当前用户存储的所有地址

@@ -69,12 +69,12 @@ router.post('/save_user', async ctx=>{
   }
   // console.log(ctx);
   const saveResult = await elmBacSql.saveUserinfo(ctx.request.body);
-  ctx.cookies.set('_id',saveResult._id,{
+  console.log(saveResult[0]);
+  ctx.cookies.set('_id',saveResult[0]._id,{
     domain: 'localhost',  // 写cookie所在的域名
-    path: ctx.url,       // 写cookie所在的路径
     maxAge: 60 * 60 * 1000, // cookie有效时长
     httpOnly: false,  // 是否只用于http请求中获取
-    overwrite: false  // 是否允许重写
+    overwrite: true  // 是否允许重写
   });
   // console.log('保存:',saveResult);
   ctx.body={
@@ -259,6 +259,16 @@ router.get('/get_place_num',async ctx=>{
 
 });
 
+//获取当前用户创建的商铺
+router.get('/user_shops',async ctx=>{
+    console.log(ctx.query._id)
+    const UserShops = await elmBacSql.getUserShops(ctx.query._id)
+    console.log(UserShops)
+    ctx.body={
+      code:0,
+      data:UserShops
+    }
+})
 
 //配置
 const storage = multer.diskStorage({
