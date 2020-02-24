@@ -183,7 +183,8 @@ const elmBacSql = {
     saveShop:  function (info) {
         const register_time = Date.now();
         let _sql_save = `INSERT into elm_back_shop_list (shop_name,shop_address,shop_phone,shop_detail,
-                        shop_tag,shop_type,shop_characteristics,shop_float_delivery_fee,shop_float_minimum_order_amount,shop_date1,shop_date2,shop_user_id,shop_register_time) 
+                        shop_tag,shop_type,shop_characteristics,shop_float_delivery_fee,shop_float_minimum_order_amount,
+                        shop_date1,shop_date2,shop_user_id,shop_register_time,shop_avatar,shop_license,shop_permission) 
                                     VALUES('${info.shop_name}',
                                     '${info.shop_address}',
                                     '${info.shop_phone}',
@@ -196,7 +197,10 @@ const elmBacSql = {
                                     '${info.shop_date1}',
                                     '${info.shop_date2}',
                                     '${info.shop_user_id}',
-                                    '${register_time}');`;
+                                    '${register_time}',
+                                    '${info.shop_avatar}',
+                                    '${info.shop_license}',
+                                    '${info.shop_permission}');`;
         return  allServices.query(_sql_save);
     },
     //保存商铺活动
@@ -255,7 +259,7 @@ const elmBacSql = {
     saveFood:function (info) {
         const register_time = Date.now();
         let _sql_save = `INSERT into elm_back_food_list (food_name,food_active,food_detail,food_characteristics,
-                        food_specifications,food_packaging_fee,food_price,food_shop_id,food_register_time) 
+                        food_specifications,food_packaging_fee,food_price,food_shop_id,food_register_time,food_avatar) 
                                     VALUES('${info.food_name}',
                                     '${info.food_active}',
                                     '${info.food_detail}',
@@ -264,7 +268,8 @@ const elmBacSql = {
                                     '${info.food_packaging_fee}',
                                     '${info.food_price}',
                                     '${info.food_shop_id}',
-                                    '${register_time}');`;
+                                    '${register_time}',
+                                    '${info.food_avatar}');`;
         return allServices.query(_sql_save);
     },
     //通过商铺id和食物名称查找是否在该商铺下已存在
