@@ -66,7 +66,7 @@ router.post('/save_user', async ctx=>{
       code:1,
       msg:'密码错误'
     }
-  }
+  }//git..
   // console.log(ctx);
   const saveResult = await elmBacSql.saveUserinfo(ctx.request.body);
   console.log(saveResult[0]);
